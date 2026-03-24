@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maze Game Menu</title>
+
+    <style>
+        body{
+            margin:0;
+            font-family: 'Segoe UI', sans-serif;
+            text-align:center;
+            color:white;
+            height:100vh;
+
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #000000);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+
+        .menu{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+        }
+
+        h1{
+            font-size:60px;
+            margin-bottom:40px;
+            text-shadow: 0 0 20px #00c6ff, 0 0 40px #0072ff;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00c6ff; }
+            to { text-shadow: 0 0 30px #0072ff, 0 0 60px #00c6ff; }
+        }
+
+        button{
+            display:block;
+            width:220px;
+            margin:15px auto;
+            padding:14px;
+            font-size:18px;
+            border:none;
+            border-radius:12px;
+            cursor:pointer;
+            color:white;
+
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border:1px solid rgba(255,255,255,0.2);
+
+            transition: all 0.3s ease;
+        }
+
+        button:hover{
+            background:#00c6ff;
+            transform:scale(1.08);
+            box-shadow:0 0 20px #00c6ff;
+        }
+
+        button:active{
+            transform:scale(0.95);
+        }
+
+        /* POPUP */
+        #popup{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            display:none;
+
+            background:rgba(0,0,0,0.6);
+            backdrop-filter:blur(8px);
+
+            justify-content:center;
+            align-items:center;
+        }
+
+        #popup-box{
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            color:white;
+            padding:30px;
+            border-radius:15px;
+            text-align:center;
+            width:280px;
+
+            box-shadow: 0 0 30px rgba(0,198,255,0.5);
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop{
+            from{transform:scale(0.7); opacity:0;}
+            to{transform:scale(1); opacity:1;}
+        }
+
+        #popup-box button{
+            background:#0072ff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="menu">
+    <h1>Maze Game</h1>
+
+    <button onclick="startGame()">▶ New Game</button>
+    <button onclick="showLevels()">🎯 Levels</button>
+    <button onclick="showExit()">❌ Exit</button>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+    <div id="popup-box">
+        <h2 id="popupText"></h2>
+        <div id="popupButtons"></div>
+    </div>
+</div>
+
+<script>
+
+function startGame(){
+    window.location.href = "index.html";
+}
+
+function showLevels(){
+    popup("Select Level", `
+        <button onclick="goLevel(1)">Level 1</button>
+        <button onclick="goLevel(2)">Level 2</button>
+        <button onclick="closePopup()">Close</button>
+    `);
+}
+
+function showExit(){
+    popup("Exit Game?", `
+        <button onclick="confirmExit()">Yes</button>
+        <button onclick="closePopup()">No</button>
+    `);
+}
+
+function popup(text, buttons){
+    document.getElementById("popup").style.display = "flex";
+    document.getElementById("popupText").innerText = text;
+    document.getElementById("popupButtons").innerHTML = buttons;
+}
+
+function goLevel(level){
+    if(level === 1){
+        window.location.href = "mazelvl1.html";
+    } else {
+        window.location.href = "mazelvl2.html";
+    }
+}
+
+function confirmExit(){
+    window.location.href = "about:blank";
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display = "none";
+}
+
+</script>
+
+</body>
+</html>
